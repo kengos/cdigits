@@ -22,7 +22,19 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Luhn (MOD 10)
+
+```
+Cdigits::Luhn.fill # => "8217161655"
+Cdigits::Luhn.fill 'CA##-####-####-###?' # => "CA66-6567-2324-6526"
+Cdigits::Luhn.fill '2020-01##-####-###?' # => "2020-0160-1171-1643"
+```
+
+#### Special chars in placeholder
+
+- `+` ... non-zero random number (1 to 9)
+- `#` ... random number (0 to 9)
+- `?` ... check digit
 
 ## Development
 
