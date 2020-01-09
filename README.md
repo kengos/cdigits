@@ -68,7 +68,7 @@ Cdigits::Luhn.easy placeholder
 
 ### Validate code
 
-```
+```rb
 Cdigits::Luhn.number? '6907562414'
 # => true
 Cdigits::Luhn.hex? '2c14a42508'

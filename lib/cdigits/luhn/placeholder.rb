@@ -7,7 +7,8 @@ module Cdigits
     class Placeholder
       NON_ZERO_SYMBOL = '+'
       NUMERIC_SYMBOL = '#'
-      CHECK_DIGIT_SYMBOL = '?' # any good idia?
+      # @note any good idia?
+      CHECK_DIGIT_SYMBOL = '?'
 
       # @param [Array<String>] characters
       def initialize(characters)
@@ -18,7 +19,6 @@ module Cdigits
       # @param [String] placeholder
       # @return [String]
       def fill(placeholder)
-        # TODO: validate placeholder string
         codes = []
         store = build_store(placeholder) do |char, digit|
           codes << (digit.nil? ? char : nil)
