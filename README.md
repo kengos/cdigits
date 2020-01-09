@@ -1,8 +1,22 @@
 # Cdigits
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/cdigits`. To experiment with that code, run `bin/console` for an interactive prompt.
+Cdigits implements Luhn N algorithm.
 
-TODO: Delete this and the text above, and describe your gem
+usage                     | N  | valid characters | example |
+------------------------- | -- | ---------------- | ------- |
+Cdigit::Luhn.number       | 10 | 0 to 9          | 8217161655 |
+Cdigit::Luhn.hex          | 16 | 0 to 9 and a to f | e780dcc9c9 |
+Cdigit::Luhn.alphanumeric | 36 | 0 to 9 and a to z | 6lgoybfzvr |
+Cdigit::Luhn.easy         | 30 | 0 to 9 and A to Z without D / I / M / O / Q / Z | U1B3J0SCG8
+
+Also, you can generate code in any format using placeholder.
+
+example:
+
+```rb
+Cdigits::Luhn.number 'CA##-####-####-###?' # => "CA66-6567-2324-6526"
+Cdigits::Luhn.number '2020-01##-####-###?' # => "2020-0160-1171-1643"
+```
 
 ## Installation
 
@@ -22,18 +36,32 @@ Or install it yourself as:
 
 ## Usage
 
-### Luhn (MOD 10)
+### Luhn mod N algorithm
 
-```
-Cdigits::Luhn.fill # => "8217161655"
-Cdigits::Luhn.fill 'CA##-####-####-###?' # => "CA66-6567-2324-6526"
-Cdigits::Luhn.fill '2020-01##-####-###?' # => "2020-0160-1171-1643"
+```rb
+placeholder = 'CA##-####-####-###?'
+Cdigits::Luhn.number
+# => "6907562414"
+Cdigits::Luhn.number placeholder
+# => "CA98-4890-6337-4381"
+Cdigits::Luhn.hex
+# => "2c14a42508"
+Cdigits::Luhn.hex placeholder
+# => "CA27-675e-7136-5fa1"
+Cdigits::Luhn.alphanumeric
+# => "yrkxeh4eie"
+Cdigits::Luhn.alphanumeric placeholder
+# => "CA59-bdxv-wjei-gdc9"
+Cdigits::Luhn.easy
+# => "16TPF8RETL"
+Cdigits::Luhn.easy placeholder
+# => "CABW-LF40-G11S-TL3U"
 ```
 
 #### Special chars in placeholder
 
-- `+` ... non-zero random number (1 to 9)
-- `#` ... random number (0 to 9)
+- `+` ... non-zero random number (1 to modulus)
+- `#` ... random number (0 to modulus)
 - `?` ... check digit
 
 ## Development
@@ -44,7 +72,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/cdigits. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/cdigits/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/kengos/cdigits. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/kengos/cdigits/blob/master/CODE_OF_CONDUCT.md).
 
 
 ## License
@@ -53,4 +81,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Cdigits project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/cdigits/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Cdigits project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/kengos/cdigits/blob/master/CODE_OF_CONDUCT.md).

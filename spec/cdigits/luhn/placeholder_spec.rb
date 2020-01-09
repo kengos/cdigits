@@ -3,42 +3,44 @@
 require 'spec_helper'
 
 RSpec.describe Cdigits::Luhn::Placeholder do
-  let(:obj) { described_class.new(placeholder: placeholder, modulus: modulus) }
-  let(:placeholder) { nil }
-  let(:modulus) { nil }
+  let(:obj) { described_class.new(placeholder: placeholder, characters: characters) }
 
-  describe '#call' do
-    subject { obj.call }
+  describe '#fill' do
+    subject { obj.fill }
 
-    context 'modulus: 10' do
-      context 'when placeholder is nil' do
-        let(:placeholder) { nil }
+    context 'when characters: numbers' do
+      let(:characters) { Cdigits::Luhn::NUMBER_CHARACTERS }
+
+      context 'placeholder: +###?' do
+        let(:placeholder) { '+###?' }
 
         before do
-          allow(SecureRandom).to receive(:random_number).with(8).and_return(0)
-          allow(SecureRandom).to receive(:random_number).with(9).and_return(2)
+          allow(SecureRandom).to receive(:random_number).with(9).and_return(0)
+          allow(SecureRandom).to receive(:random_number).with(10).and_return(4, 5, 6)
         end
 
-        # 1222222224 => 4 + (2 * 2) + 2 + (2 * 2) + 2 + (2 * 2) + 2 + (2 * 2) + 2 + (1 * 2) = 30
-        it { is_expected.to eq '1222222224' }
+        it { is_expected.to eq '14563' }
       end
 
-      context 'when placeholder is "5?-259"' do
-        let(:placeholder) { '5?-239' }
+      context 'when placeholder is "5?-202001"' do
+        let(:placeholder) { 'AB5?-20200109' }
 
-        it { is_expected.to eq '54-239' }
+        it { is_expected.to eq 'AB51-20200109' }
       end
+    end
 
-      context 'when placeholder is "5?-259"' do
-        let(:placeholder) { 'ABC-?5' }
+    context 'when characters: ["A", "B", "C", "D", "E", "F"]' do
+      let(:characters) { %w[A B C D E F] }
 
-        it { is_expected.to eq 'ABC-75' }
-      end
+      context 'placeholder: +######?' do
+        let(:placeholder) { '+######?' }
 
-      context 'when placeholder is "24?"' do
-        let(:placeholder) { '24?' }
+        before do
+          allow(SecureRandom).to receive(:random_number).with(5).and_return(0)
+          allow(SecureRandom).to receive(:random_number).with(6).and_return(0, 1, 2, 3, 4, 5)
+        end
 
-        it { is_expected.to eq '240' }
+        it { is_expected.to eq 'BABCDEFC' }
       end
     end
   end
