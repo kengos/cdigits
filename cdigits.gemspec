@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['kengos']
   spec.email         = ['kengo@kengos.jp']
 
-  spec.summary       = 'Check digits calculator'
-  spec.description   = 'Check digits calculator'
+  spec.summary       = 'Generate code with Luhn mod N algorithm using placeholder.'
+  spec.description   = "`Cdigits::Luhn.number('CA##-####-####-###?')` #=> 'CA98-4890-6337-4381'\n`Cdigits::Luhn.easy` #=> '16TPF8RETL'"
   spec.homepage      = 'https://github.com/kengos/cdigits'
   spec.license       = 'MIT'
   spec.required_ruby_version = Gem::Requirement.new('>= 2.3.0')
