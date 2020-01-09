@@ -1,5 +1,7 @@
 # Cdigits
 
+[![Build Status](https://travis-ci.org/kengos/cdigits.svg?branch=master)](https://travis-ci.org/kengos/cdigits)
+
 Cdigits implements Luhn N algorithm.
 
 usage                     | N  | valid characters | example |
