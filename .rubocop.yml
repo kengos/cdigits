@@ -8,6 +8,10 @@
 # where the inspected file is and continue its way up to the root directory.
 #
 # See https://github.com/rubocop-hq/rubocop/blob/master/manual/configuration.md
+AllCops:
+  Exclude:
+    - 'cdigits.gemspec'
+    - 'vendor/**/*'
 Layout/LineLength:
   Max: 120
 Style/Documentation:
