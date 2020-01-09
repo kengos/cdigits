@@ -13,8 +13,16 @@ module Cdigits
     #   `Cdigits::Luhn.number` # => '123456782'
     # @example
     #   `Cdigits::Luhn.number('2###-0###-0###-1##?')` # => 2960-0093-0751-1449
+    # @return [String]
     def number(placeholder = nil)
-      generate(placeholder: placeholder, characters: NUMBER_CHARACTERS)
+      generate(placeholder, NUMBER_CHARACTERS)
+    end
+
+    # Validate code with Luhn mod 10 algorithm
+    # @params [String] code
+    # @return [Boolean]
+    def number?(code)
+      valid?(code, NUMBER_CHARACTERS)
     end
 
     HEX_CHARACTERS = (NUMBER_CHARACTERS + ('a'..'f').to_a).freeze
@@ -24,8 +32,16 @@ module Cdigits
     #   `Cdigits::Luhn.hex` # => 'd6fd358a29'
     # @example
     #   `Cdigits::Luhn.hex('2###-0###-0###-1##?')` # => '2582-08fe-02fe-1d80'
+    # @return [String]
     def hex(placeholder = nil)
-      generate(placeholder: placeholder, characters: HEX_CHARACTERS)
+      generate(placeholder, HEX_CHARACTERS)
+    end
+
+    # Validate code with Luhn mod 16 algorithm
+    # @params [String] code
+    # @return [Boolean]
+    def hex?(code)
+      valid?(code, HEX_CHARACTERS)
     end
 
     ALPHANUMERIC_CHARACTERS = (NUMBER_CHARACTERS + ('a'..'z').to_a).freeze
@@ -35,8 +51,16 @@ module Cdigits
     #   `Cdigits::Luhn.alphanumeric` # => 'a0gpmk4ye4'
     # @example
     #   `Cdigits::Luhn.alphanumeric('2###-0###-0###-1##?')` # => '22u3-04s1f-0z9c-1lmo'
+    # @return [String]
     def alphanumeric(placeholder = nil)
-      generate(placeholder: placeholder, characters: ALPHANUMERIC_CHARACTERS)
+      generate(placeholder, ALPHANUMERIC_CHARACTERS)
+    end
+
+    # Validate code with Luhn mod 36 algorithm
+    # @params [String] code
+    # @return [Boolean]
+    def alphanumeric?(code)
+      valid?(code, ALPHANUMERIC_CHARACTERS)
     end
 
     # Non(hard to)-Misread/Misheard characters
@@ -54,19 +78,39 @@ module Cdigits
     # @return [Array<String>]
     EASY_CHARACTERS = (NUMBER_CHARACTERS + ('A'..'Z').to_a - %w[D I M O Q Z]).freeze
 
-    # Generate code with Luhn mod 31 algorithm
+    # Generate code with Luhn mod 30 algorithm
     # Valid characters are 0 to 9 and A to Z without D/I/M/O/Q/Z
     # @example
     #   `Cdigits::Luhn.easy` # => '5F20603XER'
     # @example
     #   `Cdigits::Luhn.easy('2###-0###-0###-1##?')` # => '2P2M-0191-05XL-1BYN'
+    # @return [String]
     def easy(placeholder = nil)
-      generate(placeholder: placeholder, characters: EASY_CHARACTERS)
+      generate(placeholder, EASY_CHARACTERS)
     end
 
-    def generate(placeholder:, characters:)
+    # Validate code with Luhn mod 30 algorithm
+    # @params [String] code
+    # @return [Boolean]
+    def easy?(code)
+      valid?(code, EASY_CHARACTERS)
+    end
+
+    def generate(placeholder, characters)
       placeholder ||= '+########?'
-      ::Cdigits::Luhn::Placeholder.new(placeholder: placeholder, characters: characters).fill
+      instance(characters).fill(placeholder)
+    end
+
+    # @params [String] code
+    # @params [Array<String>] characters
+    # @return [Boolean]
+    def valid?(code, characters)
+      instance(characters).valid?(code)
+    end
+
+    # @return [Cdigits::Luhn::Placeholder]
+    def instance(characters)
+      ::Cdigits::Luhn::Placeholder.new(characters)
     end
   end
 end

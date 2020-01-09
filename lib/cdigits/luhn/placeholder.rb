@@ -9,21 +9,31 @@ module Cdigits
       NUMERIC_SYMBOL = '#'
       CHECK_DIGIT_SYMBOL = '?' # any good idia?
 
-      def initialize(placeholder:, characters:)
-        @placeholder = placeholder
+      # @param [Array<String>] characters
+      def initialize(characters)
         @characters = characters
       end
 
-      def fill
+      # Generate code
+      # @param [String] placeholder
+      # @return [String]
+      def fill(placeholder)
         # TODO: validate placeholder string
         codes = []
-        @placeholder.chars.each do |char|
-          digit = generate_digit(char)
+        store = build_store(placeholder) do |char, digit|
           codes << (digit.nil? ? char : nil)
         end
 
         store.fill_check_digit
         generate_code(codes, store.digits)
+      end
+
+      # Validate code
+      # @param [String] placeholder
+      # @return [Boolean]
+      def valid?(placeholder)
+        store = build_store(placeholder)
+        (store.sum % modulus).zero?
       end
 
       private
@@ -32,8 +42,13 @@ module Cdigits
         @modulus ||= @characters.size
       end
 
-      def store
-        @store ||= ::Cdigits::Luhn::Store.new(modulus: modulus)
+      def build_store(placeholder)
+        store = ::Cdigits::Luhn::Store.new(modulus: modulus)
+        placeholder.chars.each do |char|
+          digit = generate_digit(char, store)
+          yield char, digit if block_given?
+        end
+        store
       end
 
       def generate_code(chars, digits)
@@ -42,7 +57,7 @@ module Cdigits
         end.join
       end
 
-      def generate_digit(char)
+      def generate_digit(char, store)
         case char
         when NON_ZERO_SYMBOL
           store.append_non_zero_number

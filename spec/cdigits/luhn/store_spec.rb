@@ -167,4 +167,23 @@ RSpec.describe Cdigits::Luhn::Store do
       end
     end
   end
+
+  describe '#double' do
+    shared_examples_for 'doubled value' do |modulus, num, expected|
+      it "when mod: #{modulus}, num: #{num} then #{expected}" do
+        expect(described_class.new(modulus: modulus).send(:double, num)).to eq expected
+      end
+    end
+
+    it_behaves_like 'doubled value', 5, 2, 4
+    it_behaves_like 'doubled value', 5, 3, 1 + 1
+    it_behaves_like 'doubled value', 5, 4, 1 + 3
+    it_behaves_like 'doubled value', 6, 3, 1 + 0
+    it_behaves_like 'doubled value', 6, 4, 1 + 2
+    it_behaves_like 'doubled value', 6, 5, 1 + 4
+    it_behaves_like 'doubled value', 7, 4, 1 + 1
+    it_behaves_like 'doubled value', 7, 5, 1 + 3
+    it_behaves_like 'doubled value', 10, 7, 1 + 4
+    it_behaves_like 'doubled value', 10, 8, 1 + 6
+  end
 end

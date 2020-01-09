@@ -36,7 +36,7 @@ Or install it yourself as:
 
 ## Usage
 
-### Luhn mod N algorithm
+### Generate code
 
 ```rb
 placeholder = 'CA##-####-####-###?'
@@ -63,6 +63,20 @@ Cdigits::Luhn.easy placeholder
 - `+` ... non-zero random number (1 to modulus)
 - `#` ... random number (0 to modulus)
 - `?` ... check digit
+
+### Validate code
+
+```
+Cdigits::Luhn.number? '6907562414'
+# => true
+Cdigits::Luhn.hex? '2c14a42508'
+# => true
+Cdigits::Luhn.alphanumeric? 'yrkxeh4eie'
+# => true
+Cdigits::Luhn.easy? '16TPF8RETL'
+# => true
+```
+
 
 ## Development
 
