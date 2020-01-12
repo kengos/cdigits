@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'securerandom'
+require 'cdigits/luhn/random_table'
 
 module Cdigits
   module Luhn
@@ -34,19 +34,21 @@ module Cdigits
       # Append random non-zero number to digits array
       # @return [Integer] appended value
       def append_non_zero_number
-        append random_number(@modulus - 1) + 1
+        append table.pick_non_zero
       end
 
       # Append random number to digits array
       # @return [Integer] appended value
       def append_number
-        append random_number(@modulus)
+        append table.pick
       end
 
       # Append passed value to digits array
-      # @param [Integer] value
+      # @param value [Integer]
+      # @param freeze [Boolean]
       # @return [Integer] appended value
       def append(value)
+        table.previsous = value
         @digits << value
         value
       end
@@ -62,8 +64,8 @@ module Cdigits
 
       private
 
-      def random_number(num)
-        ::SecureRandom.random_number(num)
+      def table
+        @table ||= ::Cdigits::Luhn::RandomTable.new(modulus: @modulus)
       end
 
       def calculate_check_digit(value, odd)
