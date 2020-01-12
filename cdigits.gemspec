@@ -9,7 +9,12 @@ Gem::Specification.new do |spec|
   spec.email         = ['kengo@kengos.jp']
 
   spec.summary       = 'Generate code with Luhn mod N algorithm using placeholder.'
-  spec.description   = "`Cdigits::Luhn.number('CA##-####-####-###?')` #=> 'CA98-4890-6337-4381'\n`Cdigits::Luhn.easy` #=> '16TPF8RETL'"
+  spec.description   = [
+    'Generate code with Luhn mod N algorithm using placeholder.',
+    'e.g)',
+    "Cdigits::Luhn.number('CA##-####-####-###?') #=> 'CA63-6485-2316-2675'",
+    "Cdigits::Luhn.easy #=> '16TPF8RETL'"
+  ].join("\n")
   spec.homepage      = 'https://github.com/kengos/cdigits'
   spec.license       = 'MIT'
   spec.required_ruby_version = Gem::Requirement.new('>= 2.3.0')

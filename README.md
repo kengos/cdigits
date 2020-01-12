@@ -16,8 +16,8 @@ Also, you can generate code in any format using placeholder.
 example:
 
 ```rb
-Cdigits::Luhn.number 'CA##-####-####-###?' # => "CA66-6567-2324-6526"
-Cdigits::Luhn.number '2020-01##-####-###?' # => "2020-0160-1171-1643"
+Cdigits::Luhn.number 'CA##-####-####-###?' # => "CA63-6485-2316-2675"
+Cdigits::Luhn.number '2020-01##-####-###?' # => "2020-0173-1935-2569"
 ```
 
 ## Installation
@@ -43,21 +43,21 @@ Or install it yourself as:
 ```rb
 placeholder = 'CA##-####-####-###?'
 Cdigits::Luhn.number
-# => "6907562414"
+# => "1638302982"
 Cdigits::Luhn.number placeholder
-# => "CA98-4890-6337-4381"
+# => "CA16-5930-2060-1262"
 Cdigits::Luhn.hex
-# => "2c14a42508"
+# => "2b69307483"
 Cdigits::Luhn.hex placeholder
-# => "CA27-675e-7136-5fa1"
+# => "CA1e-fe6c-1c04-9a28"
 Cdigits::Luhn.alphanumeric
-# => "yrkxeh4eie"
+# => "th5h7fewjl"
 Cdigits::Luhn.alphanumeric placeholder
-# => "CA59-bdxv-wjei-gdc9"
+# => "CAwf-mfkx-ncsv-odl2"
 Cdigits::Luhn.easy
-# => "16TPF8RETL"
+# => "NWK036TN1R"
 Cdigits::Luhn.easy placeholder
-# => "CABW-LF40-G11S-TL3U"
+# => "CAPY-SHHN-U55U-9PG7"
 ```
 
 #### Special chars in placeholder
